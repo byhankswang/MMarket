@@ -6,6 +6,7 @@
 
 import xdrlib, sys
 import xlrd
+import string
 
 def open_excel(file= 'file.xls'):
     try:
@@ -51,13 +52,19 @@ def excel_table_byname(file= '20170825_j1801.xls',colnameindex=0,by_name= 'æ—¥æˆ
     return list
 
 
-def getExcelData(filename):
+def get_top_5_trader_info(filename):
     book = xlrd.open_workbook(filename)
     sheetName = book.sheet_names()
     sheet1 = book.sheet_by_name(sheetName[0])
+
     top5_buyer_name = sheet1.col_values(5)[4:9]
-    top5_buyer_data = sheet1.col_values(6)[4:9]
+    top5_buyer_interest = sheet1.col_values(6)[4:9]
+    top5_seller_name = sheet1.col_values(9)[4:9]
+    top5_seller_interest = sheet1.col_values(10)[4:9]
+
     print (repr(top5_buyer_name).decode('unicode-escape'))
-    print (repr(top5_buyer_data).decode('unicode-escape'))
-    print "=====Work Done====="
+    print (repr(top5_buyer_interest).decode('unicode-escape'))
+    print (repr(top5_seller_name).decode('unicode-escape'))
+    print (repr(top5_seller_interest).decode('unicode-escape'))
+
     print(repr(sheetName).decode('unicode-escape'))
