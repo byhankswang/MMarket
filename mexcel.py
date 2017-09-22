@@ -61,18 +61,3 @@ def getExcelData(filename):
     print (repr(top5_buyer_data).decode('unicode-escape'))
     print "=====Work Done====="
     print(repr(sheetName).decode('unicode-escape'))
-
-
-def main():
-   tables = excel_table_byindex()
-   for row in tables:
-       print row
-
-   tables = excel_table_byname()
-   for row in tables:
-       print row
-
-   getExcelData("20170922_jm1801.xls")
-
-if __name__== "__main__":
-    main()
