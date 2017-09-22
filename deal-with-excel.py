@@ -50,6 +50,17 @@ def excel_table_byname(file= '20170825_j1801.xls',colnameindex=0,by_name= 'æ—¥æˆ
              list.append(app)
     return list
 
+
+def getExcelData(filename):
+    book = xlrd.open_workbook(filename)
+    sheetName = book.sheet_names()
+    sheet1 = book.sheet_by_name(sheetName[0])
+    data_col = sheet1.col_values(5)[0:10]
+    print (repr(data_col).decode('unicode-escape'))
+    print "=====Work Done====="
+    print(repr(sheetName).decode('unicode-escape'))
+
+
 def main():
    tables = excel_table_byindex()
    for row in tables:
@@ -58,6 +69,8 @@ def main():
    tables = excel_table_byname()
    for row in tables:
        print row
+
+   getExcelData("20170922_jm1801.xls")
 
 if __name__== "__main__":
     main()
