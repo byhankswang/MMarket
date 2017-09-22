@@ -55,8 +55,10 @@ def getExcelData(filename):
     book = xlrd.open_workbook(filename)
     sheetName = book.sheet_names()
     sheet1 = book.sheet_by_name(sheetName[0])
-    data_col = sheet1.col_values(5)[0:10]
-    print (repr(data_col).decode('unicode-escape'))
+    top5_buyer_name = sheet1.col_values(5)[4:9]
+    top5_buyer_data = sheet1.col_values(6)[4:9]
+    print (repr(top5_buyer_name).decode('unicode-escape'))
+    print (repr(top5_buyer_data).decode('unicode-escape'))
     print "=====Work Done====="
     print(repr(sheetName).decode('unicode-escape'))
 
