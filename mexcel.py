@@ -8,6 +8,10 @@ import xdrlib, sys
 import xlrd
 import string
 
+
+
+
+
 def open_excel(file= 'file.xls'):
     try:
         data = xlrd.open_workbook(file)
