@@ -11,7 +11,7 @@
 
 """
 
-
+import datetime
 from urllib import urlencode
 from urllib2 import urlopen, Request, HTTPError
 from httplib import IncompleteRead
@@ -21,7 +21,7 @@ CZCE__FUTURE_DAILY_URL = 'http://www.czce.com.cn/portal/DFSStaticFiles/Future/%s
 CZCE_FUTURE_DATAHOLDING_URL = "http://www.czce.com.cn/portal/DFSStaticFiles/Future/%s/%s/FutureDataHolding.txt"
 
 # 郑州商品交易所获取数据时需要伪装成浏览器访问
-request_header = {
+czce_request_header = {
     "Host":"www.czce.com.cn",
     "User-Agent": "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:55.0) Gecko/20100101 Firefox/55.0",
     "Accept":"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
@@ -31,7 +31,9 @@ request_header = {
 
 # 获取“郑州商品交易所->交易数据->期货交易数据->期货持仓排名”的数据
 def get_czce_future_dataholding():
-    request_obj = Request('http://www.czce.com.cn/portal/DFSStaticFiles/Future/2017/20170926/FutureDataHolding.txt',headers=request_header)
+    day = ct.convert_date(date) if date is not None else datetime.date.today()
+
+    request_obj = Request('http://www.czce.com.cn/portal/DFSStaticFiles/Future/2017/20170926/FutureDataHolding.txt',headers=czce_request_header)
     testdata = urlopen(request_obj)
     df = testdata.read().decode('gbk', 'ignore')
     print(df)
