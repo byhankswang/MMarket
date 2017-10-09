@@ -31,13 +31,14 @@ czce_request_header = {
 
 # 获取“郑州商品交易所->交易数据->期货交易数据->期货持仓排名”的数据
 def get_czce_future_dataholding():
-    day = ct.convert_date(date) if date is not None else datetime.date.today()
+    #day = ct.convert_date(date) if date is not None else datetime.date.today()
 
     request_obj = Request('http://www.czce.com.cn/portal/DFSStaticFiles/Future/2017/20170926/FutureDataHolding.txt',headers=czce_request_header)
     testdata = urlopen(request_obj)
     df = testdata.read().decode('gbk', 'ignore')
     print(df)
 
+    #TODO 当前需要做的工作是把返回内容以DataFrame格式存储；
 
 def get_czce_():
     return
