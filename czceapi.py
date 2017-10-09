@@ -17,6 +17,13 @@ from urllib2 import urlopen, Request, HTTPError
 from httplib import IncompleteRead
 
 DATE_PATTERN = re.compile(r'^([0-9]{4})[-/]?([0-9]{2})[-/]?([0-9]{2})')
+FUTURE_SYMBOL_PATTERN = re.compile(r'(^[A-Za-z]{1,2})[0-9]+')
+
+CZCE_COLUMNS = ['pre_settle','open','high','low','close','settle','change1','change2','volume','open_interest','oi_chg','turnover','final_settle']
+OUTPUT_COLUMNS = ['symbol', 'date', 'open', 'high', 'low', 'close', 'volume', 'open_interest', 'turnover', 'settle', 'pre_settle', 'variety']
+CZCE_DATAHOLDING_COLUMNS = []
+CZCE_DATAHOLDING_OUTPUT_COLUMNS = []
+
 
 CZCE__FUTURE_DAILY_URL = 'http://www.czce.com.cn/portal/DFSStaticFiles/Future/%s/%s/FutureDataDaily.txt'
 CZCE_FUTURE_DATAHOLDING_URL = "http://www.czce.com.cn/portal/DFSStaticFiles/Future/%s/%s/FutureDataHolding.txt"
@@ -48,21 +55,23 @@ def convert_date(date):
 
 # 获取“郑州商品交易所->交易数据->期货交易数据->期货持仓排名”的数据
 def get_czce_future_dataholding(date=None):
+
     day = convert_date(date) if date is not None else datetime.date.today()
     request_obj = Request(CZCE_FUTURE_DATAHOLDING_URL % (day.strftime('%Y'),day.strftime('%Y%m%d')), headers=czce_request_header)
-
     testdata = urlopen(request_obj)
     html = testdata.read().decode('gbk', 'ignore')
     print(html)
     print("===========================byhankswang================================")
-'''
+
     #TODO 当前需要做的工作是把返回内容以DataFrame格式存储；
+    listed_columns = CZCE_DATAHOLDING_COLUMNS
+    output_columns = CZCE_DATAHOLDING_OUTPUT_COLUMNS
     df = [i.replace(' ', '').split('|') for i in html.split('\n')[:-4] if i[0][0] != u'小']
     print(df)
     dict_data = list()
     day_const = int(day.strftime('%Y%m%d'))
     for row in html[2:]:
-        m = ct.FUTURE_SYMBOL_PATTERN.match(row[0])
+        m = FUTURE_SYMBOL_PATTERN.match(row[0])
         if not m:
             continue
         row_dict = {'date': day_const, 'symbol': row[0], 'variety': m.group(1)}
@@ -78,7 +87,7 @@ def get_czce_future_dataholding(date=None):
         dict_data.append(row_dict)
 
     return pd.DataFrame(dict_data)[output_columns]
-'''
+
 
 def get_czce_():
     return
