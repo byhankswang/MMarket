@@ -1,7 +1,17 @@
 # -*- coding: utf-8 -*-
+"""
+    Created on 2017-09-28
+    Author - Hanks.Wang
+    Contact - byhankswang@163.com
+    Description - 本模块中的类和函数基于各交易所的数据绘制图表
+
+    TODO List:
+        (1)添加子图标题;
+
+"""
+
 import numpy as np
 import matplotlib.pyplot as plt
-
 
 
 """
@@ -11,7 +21,6 @@ import matplotlib.pyplot as plt
             '0901','0905','0906','0907','0908','0911','0912','0913','0914','0915','0918','0919','0920', '0921', '0922', '0925', '0926', '0927', '0928', '0929',
             '1009', '1010', '1011', '1012', '1013']
 """
-
 x = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34]
 
 # ZC1801日结算价
@@ -29,16 +38,22 @@ zk = [7816, 5471, 5218, 3945, 7700,  7718,  7256, 6046, 6939, 6946, 8233, 8962, 
       4408, 5308, 5163, 4828, 4346]
 zj = list(map(lambda x:x[0] - x[1], zip(zd, zk)))
 
+def open_position_char(contract = "ZC1801",organization = "YA"):
+    chart = plt.figure(figsize=(20,12))
+    subchart1 = chart.add_subplot(3, 1, 1)
+    subchart2 = chart.add_subplot(3, 1, 2)
+    subchart3 = chart.add_subplot(3, 1, 3)
 
-chart = plt.figure(figsize=(20,12))
-ax1 = chart.add_subplot(3, 1, 1)
-ax2 = chart.add_subplot(3, 1, 2)
-ax3 = chart.add_subplot(3, 1, 3)
+    #ax1为ZC1801的日结算价图,ax2净持仓量, ax3多空持仓量
+    subchart1.set_title("%s Settlement Price Trend" % contract)
+    subchart1.plot(x, y, "b--", linewidth=1)
+    subchart2.set_title("%s Net Open Interest" % organization)
+    subchart2.plot(x, zj, "y--", linewidth=1)
+    subchart3.set_title("%s More & Empty Interest" % organization)
+    subchart3.plot(x, zd, "b--", linewidth=1)
+    subchart3.plot(x, zk, "r--", linewidth=1)
 
-#ax1为ZC1801的日结算价图,ax2净持仓量, ax3多空持仓量
-ax1.plot(x, y, "b--", linewidth=1)
-ax2.plot(x, zj, "y--", linewidth=1)
-ax3.plot(x, zd, "b--", linewidth=1)
-ax3.plot(x, zk, "r--", linewidth=1)
-plt.savefig("ZC1801-YAQH")
-chart.show()
+    plt.savefig("ZC1801-YAQH")
+    chart.show()
+
+open_position_char()
