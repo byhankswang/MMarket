@@ -2,6 +2,7 @@
 import requests
 from urllib import urlencode
 from urllib import quote
+import chardet
 
 '''
     @TODO LIST
@@ -73,6 +74,9 @@ OPEN_PROXY_TARGET_URL = "http://svip.kuaidaili.com/api/getproxy/?orderid=9108382
 """
 
 
+
+
+'''
 i = '北京'
 j = '广州'
 print(quote(i))
@@ -81,8 +85,57 @@ print(quote(j))
 #快代理的GET请求中中文地名使用urlencode的编码方式, Python中通过quote函数获取该编码
 html = requests.get(url=(OPEN_PROXY_TARGET_URL % quote(j)), headers=header, timeout=30).content
 print(html)
+'''
+
+
+province_list = ["江苏省", "广东省", "北京市", "浙江省","四川省", "山东省", "上海市",
+"河南省", "重庆市", "陕西省", "广西", "安徽省", "云南省", "山西省",
+"河北省", "福建省", "吉林省", "湖北省", "内蒙古", "黑龙江省", "辽宁省",
+"新疆", "江西省", "湖南省", "西藏自治区", "海南省", "贵州省", "天津市",
+"甘肃省", "青海省", "东京都"]
+
+province_utf82urlencode_list = [
+#省份（UTF-8）          urlencode
+{"江苏省": "%E6%B1%9F%E8%8B%8F%E7%9C%81"},
+{"广东省": "%E5%B9%BF%E4%B8%9C%E7%9C%81"},
+{"北京市": "%E5%8C%97%E4%BA%AC%E5%B8%82"},
+{"浙江省": "%E6%B5%99%E6%B1%9F%E7%9C%81"},
+{"四川省": "%E5%9B%9B%E5%B7%9D%E7%9C%81"},
+{"山东省": "%E5%B1%B1%E4%B8%9C%E7%9C%81"},
+{"上海市": "%E4%B8%8A%E6%B5%B7%E5%B8%82"},
+{"河南省": "%E6%B2%B3%E5%8D%97%E7%9C%81"},
+{"重庆市": "%E9%87%8D%E5%BA%86%E5%B8%82"},
+{"陕西省": "%E9%99%95%E8%A5%BF%E7%9C%81"},
+{"广西": "%E5%B9%BF%E8%A5%BF"},
+{"安徽省": "%E5%AE%89%E5%BE%BD%E7%9C%81"},
+{"云南省": "%E4%BA%91%E5%8D%97%E7%9C%81"},
+{"山西省": "%E5%B1%B1%E8%A5%BF%E7%9C%81"},
+{"河北省": "%E6%B2%B3%E5%8C%97%E7%9C%81"},
+{"福建省": "%E7%A6%8F%E5%BB%BA%E7%9C%81"},
+{"吉林省": "%E5%90%89%E6%9E%97%E7%9C%81"},
+{"湖北省": "%E6%B9%96%E5%8C%97%E7%9C%81"},
+{"内蒙古": "%E5%86%85%E8%92%99%E5%8F%A4"},
+{"黑龙江省": "%E9%BB%91%E9%BE%99%E6%B1%9F%E7%9C%81"},
+{"辽宁省": "%E8%BE%BD%E5%AE%81%E7%9C%81"},
+{"新疆": "%E6%96%B0%E7%96%86"},
+{"江西省": "%E6%B1%9F%E8%A5%BF%E7%9C%81"},
+{"湖南省": "%E6%B9%96%E5%8D%97%E7%9C%81"},
+{"西藏自治区": "%E8%A5%BF%E8%97%8F%E8%87%AA%E6%B2%BB%E5%8C%BA"},
+{"海南省": "%E6%B5%B7%E5%8D%97%E7%9C%81"},
+{"贵州省": "%E8%B4%B5%E5%B7%9E%E7%9C%81"},
+{"天津市": "%E5%A4%A9%E6%B4%A5%E5%B8%82"},
+{"甘肃省": "%E7%94%98%E8%82%83%E7%9C%81"},
+{"青海省": "%E9%9D%92%E6%B5%B7%E7%9C%81"},
+{"东京都": "%E4%B8%9C%E4%BA%AC%E9%83%BD"}]
 
 
 
 
 
+
+for i in province_list:
+    print("{\"%s\": \"%s\"}," % (i,quote(i)))
+
+    #print(chardet.detect(i))
+    #print(quote(i))
+    #print(type(quote(i)))
