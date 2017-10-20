@@ -1,5 +1,12 @@
 # -*- coding:utf-8 -*-
 import requests
+from urllib import urlencode
+from urllib import quote
+
+'''
+    @TODO LIST
+    (1)后台程序定时监测快代理的稳定性, 并统计可用城市及可用城市的IP数量;
+'''
 
 
 header = {
@@ -16,9 +23,7 @@ header = {
 #免费代理页面
 FREE_PROXY_TARGET_URL = ("http://www.kuaidaili.com/free/inha/1")
 #开放代理SVIP账户页面
-#OPEN_PROXY_TARGET_URL = "http://svip.kuaidaili.com/api/getproxy/?orderid=910838254256636&num=5&area=%E5%8C%97%E4%BA%AC&b_pcchrome=1&b_pcie=1&b_pcff=1&protocol=1&method=2&an_an=1&an_ha=1&sep=1"
-#OPEN_PROXY_TARGET_URL = "http://svip.kuaidaili.com/api/getproxy/?orderid=910838254256636&num=5&area=河北&b_pcchrome=1&b_pcie=1&b_pcff=1&protocol=1&method=2&an_an=1&an_ha=1&sep=1&f_loc=1&format=json"
-OPEN_PROXY_TARGET_URL = "http://svip.kuaidaili.com/api/getproxy/?orderid=910838254256636&num=5&area=%E5%8C%97%E4%BA%AC &b_pcchrome=1&b_pcie=1&b_pcff=1&protocol=1&method=2&an_an=1&an_ha=1&sep=1&f_loc=1"
+OPEN_PROXY_TARGET_URL = "http://svip.kuaidaili.com/api/getproxy/?orderid=910838254256636&num=5&b_pcchrome=1&b_pcie=1&b_pcff=1&protocol=1&method=2&an_an=1&an_ha=1&sep=1&f_loc=1&area=%s"
 
 
 
@@ -68,5 +73,16 @@ OPEN_PROXY_TARGET_URL = "http://svip.kuaidaili.com/api/getproxy/?orderid=9108382
 """
 
 
-html = requests.get(url=OPEN_PROXY_TARGET_URL, headers=header, timeout=30).content
+i = '北京'
+j = '广州'
+print(quote(i))
+print(quote(j))
+
+#快代理的GET请求中中文地名使用urlencode的编码方式, Python中通过quote函数获取该编码
+html = requests.get(url=(OPEN_PROXY_TARGET_URL % quote(j)), headers=header, timeout=30).content
 print(html)
+
+
+
+
+
