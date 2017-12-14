@@ -15,6 +15,7 @@ import datetime
 from urllib import urlencode
 from urllib2 import urlopen, Request, HTTPError
 from httplib import IncompleteRead
+import pandas as pd
 
 DATE_PATTERN = re.compile(r'^([0-9]{4})[-/]?([0-9]{2})[-/]?([0-9]{2})')
 FUTURE_SYMBOL_PATTERN = re.compile(r'(^[A-Za-z]{1,2})[0-9]+')
