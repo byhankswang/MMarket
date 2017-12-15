@@ -59,10 +59,19 @@ def get_czce_future_dataholding(date=None):
 
     day = convert_date(date) if date is not None else datetime.date.today()
     request_obj = Request(CZCE_FUTURE_DATAHOLDING_URL % (day.strftime('%Y'),day.strftime('%Y%m%d')), headers=czce_request_header)
-    testdata = urlopen(request_obj)
-    html = testdata.read().decode('gbk', 'ignore')
-    print(html)
-    print("===========================APPLE================================")
+
+    try:
+        html_init = urlopen(request_obj).read().decode('gbk', 'ignore')
+    except HTTPError as reason:
+        if reason.code != 404:
+            print(CZCE_FUTURE_DATAHOLDING_URL % (day.strftime('%Y'),day.strftime('%Y%m%d')), reason)
+        return
+
+    print(html_init)
+    if html_init.find(u'网页错误') >= 0:
+        return
+
+    print("-----------------------A")
 
     #TODO 当前需要做的工作是把返回内容以DataFrame格式存储；
     listed_columns = CZCE_DATAHOLDING_COLUMNS
