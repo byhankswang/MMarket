@@ -62,7 +62,7 @@ def get_czce_future_dataholding(date=None):
     testdata = urlopen(request_obj)
     html = testdata.read().decode('gbk', 'ignore')
     print(html)
-    print("===========================byhankswang================================")
+    print("===========================APPLE================================")
 
     #TODO 当前需要做的工作是把返回内容以DataFrame格式存储；
     listed_columns = CZCE_DATAHOLDING_COLUMNS
@@ -89,6 +89,16 @@ def get_czce_future_dataholding(date=None):
 
     return pd.DataFrame(dict_data)[output_columns]
 
+# 获取“郑州商品交易所->交易数据->期货交易数据->期货”的数据
+def get_czce_future_data_daily(date = None):
+    day = convert_date(date) if date is not None else datetime.date.today()
+    request_obj = Request(CZCE__FUTURE_DAILY_URL % (day.strftime('%Y'), day.strftime('%Y%m%d')),
+                          headers=czce_request_header)
+    testdata = urlopen(request_obj)
+    html = testdata.read().decode('gbk', 'ignore')
 
-def get_czce_():
-    return
+
+    html = [i.replace(' ','').split('|') for i in html.split('\n')[:-4] if i[0][0] != u'小']
+    print(html)
+    #if html[1][0] not in [u'品种月份', u'品种代码']:
+     #       return

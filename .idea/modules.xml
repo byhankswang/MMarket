@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/mmarket.iml" filepath="$PROJECT_DIR$/.idea/mmarket.iml" />
       <module fileurl="file://$PROJECT_DIR$/../tushare/.idea/tushare.iml" filepath="$PROJECT_DIR$/../tushare/.idea/tushare.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../tushare/.idea/tushare.iml" filepath="$PROJECT_DIR$/../tushare/.idea/tushare.iml" />
     </modules>
   </component>
 </project>
