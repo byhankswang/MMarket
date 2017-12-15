@@ -73,28 +73,7 @@ def get_czce_future_dataholding(date=None):
 
     print("-----------------------A")
 
-    #TODO 当前需要做的工作是把返回内容以DataFrame格式存储；
-    listed_columns = CZCE_DATAHOLDING_COLUMNS
-    output_columns = CZCE_DATAHOLDING_OUTPUT_COLUMNS
-    df = [i.replace(' ', '').split('|') for i in html.split('\n')[:-4] if i[0][0] != u'小']
-    print(df)
-    dict_data = list()
-    day_const = int(day.strftime('%Y%m%d'))
-    for row in html[2:]:
-        m = FUTURE_SYMBOL_PATTERN.match(row[0])
-        if not m:
-            continue
-        row_dict = {'date': day_const, 'symbol': row[0], 'variety': m.group(1)}
-        for i, field in enumerate(listed_columns):
-            if row[i + 1] == "\r":
-                row_dict[field] = 0.0
-            elif field in ['volume', 'open_interest', 'oi_chg', 'exercise_volume']:
-                row[i + 1] = row[i + 1].replace(',', '')
-                row_dict[field] = int(row[i + 1])
-            else:
-                row[i + 1] = row[i + 1].replace(',', '')
-                row_dict[field] = float(row[i + 1])
-        dict_data.append(row_dict)
+
 
     return pd.DataFrame(dict_data)[output_columns]
 
@@ -109,5 +88,6 @@ def get_czce_future_data_daily(date = None):
 
     html = [i.replace(' ','').split('|') for i in html.split('\n')[:-4] if i[0][0] != u'小']
     print(html)
-    #if html[1][0] not in [u'品种月份', u'品种代码']:
-     #       return
+
+    #TODO change string to DataFrame and return DataFrame
+    #return pd.DataFrame(dict_data)[output_columns]
