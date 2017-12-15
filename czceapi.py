@@ -67,15 +67,15 @@ def get_czce_future_dataholding(date=None):
             print(CZCE_FUTURE_DATAHOLDING_URL % (day.strftime('%Y'),day.strftime('%Y%m%d')), reason)
         return
 
-    print(html_init)
     if html_init.find(u'网页错误') >= 0:
         return
 
-    print("-----------------------A")
+    #future_list = [i.replace(',', '').split(',') for i in html_init.split('\n')]
 
+    pattern = re.compile(u'品种：')
+    future_list = re.split(pattern, html_init)
 
-
-    return pd.DataFrame(dict_data)[output_columns]
+    print future_list
 
 # 获取“郑州商品交易所->交易数据->期货交易数据->期货”的数据
 def get_czce_future_data_daily(date = None):
