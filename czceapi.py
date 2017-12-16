@@ -70,10 +70,14 @@ def get_czce_future_dataholding(date=None):
     if html_init.find(u'网页错误') >= 0:
         return
 
+    pattern = re.compile(u'品种：')
+    init_list = re.split(pattern, html_init)
+    pattern = re.compile(u'合约：')
+    sub_list = re.split(pattern, init_list[-1])
+    future_list = init_list[1:-1] + sub_list
+
     #future_list = [i.replace(',', '').split(',') for i in html_init.split('\n')]
 
-    pattern = re.compile(u'品种：')
-    future_list = re.split(pattern, html_init)
 
     print future_list
 
