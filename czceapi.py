@@ -78,6 +78,7 @@ def get_czce_future_dataholding(date=None):
 
     #future_list = [i.replace(',', '').split(',') for i in html_init.split('\n')]
 
+    #TODO 由于郑州商品交易所期货持仓排名表是多维数组，此时应当考虑如何重塑数据或直接存入数据库之中；
 
     print future_list
 
